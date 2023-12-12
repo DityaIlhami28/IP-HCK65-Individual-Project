@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.belongsToMany(models.Games, {
+        through : "Transactions",
+        foreignKey : "gameId"
+      })
     }
   }
   User.init({
@@ -20,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull : false,
       validate : {
         notEmpty : {
-          message : "Username is Required"
+          msg : "Username is Required"
         }
       }
     },
@@ -29,11 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull : false,
       unique: true,
       validate : {
-        notEmpty : {
-          message : "Email is Required"
-        },
         isEmail : {
-          message : "Invalid Email Format"
+          msg : "Invalid Email Format"
+        },
+        notEmpty : {
+          msg : "Email is Required"
         }
       }
     },
@@ -42,7 +46,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull : false,
       validate : {
         notEmpty : {
-          message : "Password is Required"
+          msg : "Password is Required"
+        },
+        len : {
+          args : [5],
+          msg : "Minimum Password is 5 Characthers"
         }
       }
     },
@@ -50,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       type : DataTypes.STRING,
       allowNull : false,
       defaultValue : "Customer"
-    }
+    },
   }, {
     hooks : {
       beforeCreate(instance, option) {

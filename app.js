@@ -4,6 +4,8 @@ const port = 3000
 const cors = require("cors")
 const UserController = require("./controllers/userController")
 const errorHandler = require("./middlewares/errorHandler")
+const GameController = require("./controllers/gameController")
+const GenreController = require("./controllers/genreController")
 
 app.use(express.urlencoded({extended : false}))
 app.use(express.json())
@@ -17,6 +19,14 @@ app.get("/", (req,res) => {
 
 //endpoint login & register
 app.post("/login", UserController.Login)
+app.post("/register", UserController.Register)
+
+//endpoint get game list
+app.get("/games", GameController.getGame)
+app.get("/games/:id", GameController.getGameId)
+
+//endpoint get genre list
+app.get("/genres", GenreController.getGenre)
 
 
 
