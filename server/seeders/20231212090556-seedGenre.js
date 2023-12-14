@@ -19,7 +19,7 @@ module.exports = {
     //               el.updatedAt = new Date()
     //               return el
     //             })
-      const response = await axios.get("https://api.rawg.io/api/genres?key=374fc9f7c6354f5393361b350cae490e")
+      const response = await axios.get(`https://api.rawg.io/api/genres?key=374fc9f7c6354f5393361b350cae490e`)
       // console.log(data)
       const genres = response.data.results
       const genre = genres.map((el) => {

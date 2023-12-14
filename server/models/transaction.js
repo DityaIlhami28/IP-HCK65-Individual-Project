@@ -11,14 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Transaction.belongsTo(models.User)
-      Transaction.belongsTo(models.Games)
+      Transaction.belongsTo(models.User, {
+        foreignKey : "userId"
+      })
+      Transaction.belongsTo(models.Games, {
+        foreignKey : "gameId"
+      })
     }
   }
   Transaction.init({
     userId: DataTypes.INTEGER,
     gameId: DataTypes.INTEGER,
-    orderId: DataTypes.INTEGER,
+    orderId: DataTypes.STRING,
     status : DataTypes.STRING,
     paidDate : DataTypes.DATE,
     token : DataTypes.STRING

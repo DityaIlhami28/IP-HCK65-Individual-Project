@@ -94,5 +94,20 @@ class GameController{
             next(error)
         }
     }
+    static async getPaginatedGames(req, res, next) {
+        try {
+            const {page = 1, pageSize = 10} = req.query
+            const offset = (page - 1) * pageSize
+            const games = await Games.findAll({
+                include: Genre,
+                offset,
+                limit: pageSize,
+              });
+        
+              res.status(200).json(games);
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 module.exports = GameController
