@@ -12,14 +12,14 @@ const { queryInterface } = sequelize
 
 let sign_token
 beforeAll(async () => {
-    let dataUser = {
-        username : "dodot",
-        email : "dodot@gmail.com",
-        password : "12345",
-        role : "Admin",
-    }
-    data = await User.create(dataUser)
-    sign_token = signToken({id : data[0].id})
+    // let dataUser = {
+    //     username : "dodot",
+    //     email : "dodot@gmail.com",
+    //     password : "12345",
+    //     role : "Admin",
+    // }
+    // data = await User.create(dataUser)
+    // sign_token = signToken({id : data.id})
     const response1 = await axios.get(`https://api.rawg.io/api/genres?key=374fc9f7c6354f5393361b350cae490e`)
       // console.log(data)
       const genres = response1.data.results
@@ -55,22 +55,19 @@ beforeAll(async () => {
 describe("Get /games", () => {
     test("get games", async () => {
         let {status, body} = await request(app)
-        .get("/games")
-        .set("Authorization", `Bearer ${sign_token}`)
+        .get("/pub/games")
+     expect(status).toBe(200)
+    })
+    test("get games id", async () => {
+        let {status, body} = await request(app)
+        .get("/pub/games/1")
         expect(status).toBe(200)
     })
     test("failed get games", async () => {
         let {status, body} = await request(app)
-        .get("/games")
-        expect(status).toBe(500)
-        expect(body).toHaveProperty("message", "Internal Server Error")
-    })
-    test("failed get games", async () => {
-        let {status, body} = await request(app)
-        .get("/games")
-        .set("Authorization", `Bearer AWDJASKDJKSADSAKD`)
-        expect(status).toBe(401)
-        expect(body).toHaveProperty("message", "Invalid Token")
+        .get("/pub/games/200")
+        expect(status).toBe(404)
+        expect(body).toHaveProperty("message", "Game Not Found")
     })
 })
 

@@ -49,6 +49,7 @@ class GameController{
             res.status(200).json({
                 message : `${game.name} succesfully deleted`
             })
+            // console.log("game")
         } catch (error) {
             next(error)
         }
