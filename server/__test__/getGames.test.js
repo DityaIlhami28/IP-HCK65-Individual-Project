@@ -19,7 +19,7 @@ beforeAll(async () => {
         role : "Admin",
     }
     data = await User.create(dataUser)
-    sign_token = signToken({id : data[0].id})
+    sign_token = signToken({id : data.id})
     const response1 = await axios.get(`https://api.rawg.io/api/genres?key=374fc9f7c6354f5393361b350cae490e`)
       // console.log(data)
       const genres = response1.data.results
@@ -56,7 +56,9 @@ describe("Get /games", () => {
     test("get games", async () => {
         let {status, body} = await request(app)
         .get("/games")
-        .set("Authorization", `Bearer ${sign_token}`)
+        .set("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzAzMjEzMzQwfQ.2F8Tkvmawio2dSLLmSiynmj8fo9FOcRl1W3zqFLeJDc`)
+        console.log(sign_token)
+        console.log(body, "<<<<<<<<<<<")
         expect(status).toBe(200)
     })
     test("failed get games", async () => {

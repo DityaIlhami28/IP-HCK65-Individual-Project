@@ -31,7 +31,7 @@ module.exports = (error, req, res, next) => {
             break;
         
     }
-    // console.log(error)
+    console.log(error)
     res.status(status).json({
         message
     })
